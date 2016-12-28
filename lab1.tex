@@ -1,0 +1,48 @@
+%author : mfrw
+\documentclass[9pt]{article}
+
+
+\begin{document}
+
+\title{Lab I}
+\author{C Refresher Module}
+
+\maketitle
+
+\section{FS Walker}
+Consider a Unix system where data is stored in directories. There is a root directory \textbf{(denoted by ‘/’)} which contains several other directories, each with a unique name. 
+These directories may further contain directories and so on, thus forming a hierarchy. A directory can be uniquely identified by its name and its parent directory (the directory 
+it is directly contained in). This is usually encoded in a path, which consists of several parts each preceded by a forward slash \textbf{(`/')}. The final part is the name of the directory, 
+and everything else gives the path of its parent directory. \\
+Example: \textit{\textbf{`/home/mfrw/linux'}} is the path to the directory \textit{\textbf{`linux'}}. \\
+
+You are given a file \textit{\textbf{entries.in}} as per the format:
+\begin{itemize}
+	\item First set of lines consist of directory path in each line existing on a Unix computer.
+	\item The second set of lines, as separated by an empty line from the first set, consists of a directory path in each line that you want to test for its existence.
+		\em{Assume all the entries are absolute, i.e start with \textbf{`/'}} \em
+\end{itemize}
+\textbf{Your task is to:}
+\begin{itemize}
+	\item Build a directory tree from the first set of lines using an \em{appropriatae} \em data structure where each node contains the name of the directory and has a pointer to the child directory nodes.
+	\item Use the directory tree to check if the paths given in the second set of lines exist or not.\\
+		Print \textit{\textbf{Yes/No}} on the console, corresponding to each of the path to be tested.
+\end{itemize}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\textbf{Submission:} Upload on backpack:
+\begin{itemize}
+	\item A zipped\footnote[2]{We will run a plagiarism detector.} file including -- a \textbf{makefile} to compile the program\footnote[3]{We expect a C program and no other language.},
+	a simple one paragraph writeup (\textbf{readme}) of the approach used,
+		the \textbf{source} code of the program \& the \textit{\textbf{entries.in}} file.
+\end{itemize}
+
+
+
+%\textbf{For those who want more} \\
+%Any of these or all would make you eligible for a bonus:
+%\begin{itemize}
+%	\item Try solving the same using a \textit{\textbf{B Tree/B+ Tree}}
+%	\item Use a generic linked list implementation. \em{See the linux kernel implementation of linked lists} \em
+%\end{itemize}
+
+\end{document}
