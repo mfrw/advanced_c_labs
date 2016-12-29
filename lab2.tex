@@ -1,0 +1,93 @@
+%author : mfrw
+\documentclass{article}
+\title{\vspace{-7cm}}
+\usepackage{listings}
+
+
+\begin{document}
+
+\title{Lab II}
+\author{C Refresher Module}
+
+\maketitle
+
+\section{Ultra Simple Shell}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\subsection{Background}
+A command line interpreter, or \textbf{shell}, program is a mechanism with which each interactive user can issue commands to the OS and by which the OS can respond directly to the user.  Whenever a user has successfully logged into the computer (\textit{a process will have been assigned to the user when they begin the login procedure}), the OS causes the user process to execute a shell.  The OS does not ordinarily have a built-in window interface -- instead the OS assumes a simple character-oriented interface in which the user types a string of characters (terminated with the \textbf{return} key), and in which the OS responds by typing lines of characters back to the screen.  The character-oriented shell assumes a screen display with a fixed number of lines (usually 25) and a fixed number of characters (usually 80) per line.
+\subsection{Design}
+The shell relies on an important convention to accomplish its task: The command for the command line are is usually the name of a file that contains an executable program.  For example, \em{\textbf{ls}} \em and \em{\textbf{gcc}} \em are the names of files (stored in \textbf{\textit{`/bin'}} on most Unix-style machines.)  In a few cases, the command is not a file name, but is actually a command that is implemented within the shell \textbf{builtin}; for example \textbf{cd} ("change directory") is usually implemented within the shell rather than in a file.  \\
+\em{Since the vast majority of the commands are implemented in files, think of the command as actually being the file name in some directory on the machine.  This means that the shell's job is to find the file, to prepare the list of parameters for the command, then to cause the command to be executed using the parameters.} \em
+\\
+
+There is a long line of shell programs used with Unix variants, including the original Bourne shell (\textbf{sh}), the C shell (\textbf{csh}) with its additional features over sh, the Korn shell (\textbf{ksh}), and so on, to the standard Linux shell (bash -- meaning \textbf{B}ourne-\textbf{A}gain \textbf{sh}ell.) All these shells have followed a similar set of rules for command line syntax, though each has its own special features.  The \textbf{cmd.exe} shell for WindowsNT uses its own similar, but distinct, command language.
+\\
+A shell could use many different strategies to execute a user's computation. \\ \textit{\textbf {The basic approach used in modern shells is to create a new process (or thread) to execute any new computation.}}
+
+	  \em {For example, if a user decides to compile a program, the process interacting with the user creates a new child process.  The first process then directs the new child process to execute the compiler program. \em \\
+
+This idea of creating a new process to execute a computation may seem like overkill, but it has a very important characteristic.  When the original process decides to execute a new computation, it protects itself from any fatal errors that might arise during that execution.  If it did not use a child process to execute the command, a chain of fatal errors could cause the initial process to fail, thus crashing\footnote[2]{If the shell was the only process.} the entire machine. \\
+
+\textbf{Your task is to:}
+\begin{itemize}
+	\item Build an ultra simple shell (\em{ufs}) \em using the \textit{\textbf{fork/exec/wait}} system calls.
+	\item It should take commands from \textit{stdin} and the output should be on \textit{stdout}, in an \textit{infinite-while} loop.
+	\item Prefrably it should have an \textit{exit} string, which breaks out of the while loop and exits.
+\end{itemize}
+\textbf{Submission\footnote[3]{We will use a plagiarism detector.}}: Upload on backpack: \\
+	A zipped file inculding:
+\begin{itemize}
+	\item The \textbf{source code\footnote[4]{Please \textbf{\textit{`indent -linux myshell.c'}} before submitting.}} of the shell.
+	\item The \textbf{makefile} for compilation.
+	\item A small \textbf{write-up} of the approach used.
+\end{itemize}
+
+\section{Example}
+\begin{verbatim}
+	mfrw@kp:-$ ./ush
+	ush> ls
+	makefile ush.c ush
+	ush> uptime
+	22:19:47 up 17:59,  2 users,  load average: 0.36, 0.23, 0.19
+	ush> pwd
+	/home/mfrw
+	ush> exit
+	mfrw@kp:-$
+\end{verbatim}
+
+\section{Hints}
+\begin{lstlisting}[language=C]
+int main() {
+   /* main loop */
+   while (true) {
+       /* print prompt string */
+       ...
+       /* read command from stdin */
+       ...
+       /* parse command -- exit if quit */
+       ...
+       if (fork() == 0) {
+           /* this is the child */
+           ...
+           /* use exec to run the command */
+           ...
+           /* exit child */
+       } else {
+           /* this is the parent */
+           ...
+           wait(status)
+       }
+   }
+}
+
+\end{lstlisting}
+\section{For those who want more}
+Any of these or all would make you eligible for a bonus:
+\begin{itemize}
+	\item Try to include \textbf{\textit{redirection \& piping}}. \texttt{(<,>,>>,|)} 
+	\item Try to include \textbf{\textit{job-control}}\footnote[2]{\texttt{CTRL-Z, fg, bg, jobs, \&.}}. \\
+\end{itemize}
+\section{I still want more}
+Pull this repo and complete it\footnote[3]{\texttt{Feel free to ask for help.}}. It is from \texttt{CSAPP\footnote[4]{\texttt{Computer Systems A Programmer's Prespective}}}.\\
+	\texttt{git@github.com:mfrw/shlab.git}
+\end{document}
