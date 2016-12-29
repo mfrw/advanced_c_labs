@@ -37,13 +37,41 @@ You are given a file \textit{\textbf{entries.in}} as per the format:
 		the \textbf{source} code of the program \& the \textit{\textbf{entries.in}} file.
 \end{itemize}
 
+\section{Example}
+An example \textit{\textbf{entries.in}} file :
+\begin{verbatim}
+	/a
+	/b
+	/c/d/g
+	/c/d
+	/a/e/f
 
+	/a/e
+	/a/g
+	/c
+\end{verbatim}
+The \textit{output} for this is :
+\begin{verbatim}
+	YES : /a/e
+	NO  : /a/g
+	YES : /c
+\end{verbatim}
+\em{\textbf{NOTE}: The program would be checked by redirecting the output on our test-cases to a file and then using \textbf{diff}, so please follow the output pattern.} \em
 
-%\textbf{For those who want more} \\
-%Any of these or all would make you eligible for a bonus:
-%\begin{itemize}
-%	\item Try solving the same using a \textit{\textbf{B Tree/B+ Tree}}
-%	\item Use a generic linked list implementation. \em{See the linux kernel implementation of linked lists} \em
-%\end{itemize}
+\section{Hints}
+\begin{itemize}
+	\item The first node should always be `/'.
+	\item Look at the man page of \textbf{\textit{strtok}} to tokenize a string.
+	\item Think simple, please don't over complicate stuff for yourself.
+	\item Write clean, modular code.
+	\item If you think this can't be done in lab. \textbf{Trust yourself, it can!}.
+\end{itemize}
+\section{For those who want more}
+Any of these or all would make you eligible for a bonus:
+\begin{itemize}
+	\item Try solving the same using a \textit{\textbf{fancy}} data-structure. \textit{(e.g B/B+ Tree etc)}
+	\item Use a generic linked list implementation. \\
+		\em{See the linux kernel implementation of linked lists} \em
+\end{itemize}
 
 \end{document}
