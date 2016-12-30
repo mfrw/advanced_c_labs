@@ -1,0 +1,97 @@
+%author : mfrw
+\documentclass{article}
+\title{\vspace{-7cm}}
+\usepackage{listings}
+\usepackage{epigraph}
+\usepackage{amsmath}
+
+
+\begin{document}
+
+\title{Lab III}
+\author{C Refresher Module}
+
+\maketitle
+\epigraph{\em{``Today's lab is difficult as our lives. First day of lab invokes my nihilism.''\em}}
+%nihilism = $\displaystyle \frac{existence}{esistence} \times 0$}
+{\texttt{-Anonymous}}
+\section{Matrix Multiplication}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+The goal of this lab is to implement \texttt{Matrix Multiplication} using threads. This computation comes in a class of problems called as \texttt{embarrassingly parallel}. It means the differnt operations in this problem are indipendent of each other, so easily parallelizable.
+\\
+You are given two matrices, A and B, where matrix A contains M rows and K columns and matrix B contains K rows and N columns, the matrix product of A and B is matrix C, where C contains M rows and N columns.
+The input is from \texttt{stdin} and as follows:
+\begin{itemize}
+	\item The first line contains space seperated values of \textbf{M \& K}.
+	\item The next \textbf{M} lines contain \textbf{K} space seperated values, followed by a blank line.
+	\item The following line contains space seperated values of \textbf{K \& N}.
+	\item The next \textbf{K} lines contain \textbf{N} space seperated values.
+\end{itemize}
+\textbf{Your task is to:}
+\begin{itemize}
+	\item Build a  \textit{\textbf{multi-threaded}} program that does matrix multiplication.
+	\item Create a \textbf{\textit{thread}} for each element of the resultant matrix \textbf{C}.
+	\item Print the resultant Matrix.
+\end{itemize}
+\newpage
+\textbf{Submission\footnote[2]{We will use a plagiarism detector.}}: Upload a zipfile on backpack including: \\ 
+\begin{itemize}
+	\item The \textbf{source code\footnote[3]{Please \textbf{\textit{`indent -linux matmul.c'}} before submitting.}} of the program.
+	\item The \textbf{makefile} for compilation.
+	\item A small \textbf{write-up} of the approach used.
+\end{itemize}
+
+
+\section{Example}
+\begin{verbatim}
+	mfrw@kp:-$ cat test.in
+	3 4
+	97 58 35 79
+	43 73 88 32
+	74 66 99 89
+
+	4 5
+	43 64 16 83 46
+	64 37 67 17 79
+	92  8  8 82 63
+	37 55 96 92 94
+
+	mfrw@kp:-$ ./matmul < test.in
+	14026 12979 13302 19175 18675
+	15801  7917  9355 14970 16297
+	19807 12865 14942 23570 23221
+	mfrw@kp:-$ 
+\end{verbatim}
+\newpage
+\section{Hints}
+\em{Please dont generate random numbers by hand. Modify the program below to make a random matrix.} \em
+%\begin{lstlisting}[language=C]
+\begin{verbatim}
+#include<stdio.h>
+#include<time.h>
+
+int main(int argc, char *argv[]) {
+    srand(time(NULL));
+    int size = 10;
+    int mod_num = 100;
+    if (argc == 2)
+        size = atoi(argv[1]);
+    while (size--)
+        printf("%2d ", (int)random()%mod_num);
+    printf("\n");
+    return 0;
+}
+
+\end{verbatim}
+%\end{lstlisting}
+\section{For those who want more}
+\texttt{Happy New Year !!!} \\
+It's for \textit{\textbf{you}} and us too. Finish the lab and off you go to enjoy.
+\section{I still want more}
+\textbf{Have a go at this:}
+\begin{itemize}
+	\item Your program should take a \textit{\textbf{command-line argument}} the number of threads to use for the computation.
+	\item \textit{Appropriately} break-down the work equally to the threads created.
+	\item If no command-line argument is given you should run threads equal to number of \textit{\textbf{cores\footnote[2]{\texttt{sysconf(\_SC\_NPROCESSORS\_ONLN)}}}} on your machine. \texttt{(man sysconf)}
+\end{itemize}
+\end{document}
